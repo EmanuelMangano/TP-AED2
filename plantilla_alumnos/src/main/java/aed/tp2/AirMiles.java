@@ -1,7 +1,14 @@
 package aed.tp2;
 
+import java.util.ArrayList;
+
 public class AirMiles implements SistemaAirMiles {
-    /*COMPLETAR*/
+    
+    private ABB<Handle<usuario>> usuarios;
+    private Trie<promocion> promociones;
+    private MaxHeap<id> rankingMillasDisponibles;
+    private Tupla<id,millas> masCanjeador;
+    private Tupla<id,millas> masAcumulador;
 
     public AirMiles() {
         throw new UnsupportedOperationException("Sin implementar");
