@@ -1,4 +1,4 @@
-package aed;
+package aed.tp2;
 
 import java.util.*;
 
@@ -41,6 +41,16 @@ public class MaxHeap<T extends Comparable<T>> {
     }
 
     public void ordenar(Nodo nodo){
+        while (((nodo.padre==null && ((nodo.izquierdo != null && (nodo.izquierdo.prioridad.compareTo(nodo.prioridad)>0))
+            || (nodo.derecho != null && nodo.derecho.prioridad.compareTo(nodo.prioridad)>0)))
+            || (nodo.padre !=null && nodo.padre.prioridad.compareTo(nodo.prioridad)<0)
+            || (nodo.izquierdo != null && (nodo.izquierdo.prioridad.compareTo(nodo.prioridad)>0))
+            || (nodo.derecho != null && nodo.derecho.prioridad.compareTo(nodo.prioridad)>0))
+            
+            
+
+        ){
+          
         if (nodo.padre==null){
             Nodo derecho = nodo.derecho;
             Nodo izquierdo = nodo.izquierdo;
@@ -62,7 +72,7 @@ public class MaxHeap<T extends Comparable<T>> {
                     this.raiz=izquierdo;
 
                 }
-                if (derecho.prioridad.compareTo(izquierdo.prioridad)>0 && nodo.prioridad.compareTo(derecho.prioridad)<0){
+                else if (derecho.prioridad.compareTo(izquierdo.prioridad)>0 && nodo.prioridad.compareTo(derecho.prioridad)<0){
                     if (derecho.izquierdo != null){
                         derecho.izquierdo.padre=nodo;
                     }
@@ -88,6 +98,7 @@ public class MaxHeap<T extends Comparable<T>> {
                     if (izquierdo.derecho != null){
                         izquierdo.derecho.padre=nodo;
                     }
+                    
                     izquierdo.padre = null;
                     nodo.padre=izquierdo;
                     nodo.izquierdo=izquierdo.izquierdo;
@@ -99,9 +110,9 @@ public class MaxHeap<T extends Comparable<T>> {
                 }
 
             }
+            
         }
-        if (nodo.padre !=null){
-            while (nodo.padre !=null && nodo.prioridad.compareTo(nodo.padre.prioridad)>0){
+        else if (nodo.padre !=null && nodo.padre.prioridad.compareTo(nodo.prioridad)<0){
                 Nodo padre = nodo.padre;
                 Nodo abuelo = padre.padre;
                 Nodo izquierdo= nodo.izquierdo;
@@ -119,7 +130,7 @@ public class MaxHeap<T extends Comparable<T>> {
                     if(abuelo.izquierdo == padre){
                         abuelo.izquierdo = nodo;
                     }
-                    if (abuelo.derecho == padre) {
+                    else if (abuelo.derecho == padre) {
                         abuelo.derecho = nodo;
                     }
                 }
@@ -134,12 +145,14 @@ public class MaxHeap<T extends Comparable<T>> {
                 
                 if (izquierdo != null){
                     izquierdo.padre= padre;
-                    padre.izquierdo= izquierdo;
+
                 }
+                padre.izquierdo= izquierdo;
                 if (derecho !=null){
                    derecho.padre = padre;
-                   padre.derecho= derecho;
+
                 }
+                padre.derecho= derecho;
                 padre.padre=nodo;
                 nodo.padre = abuelo;
                 if (otroHijoPadre!=null){
@@ -149,11 +162,9 @@ public class MaxHeap<T extends Comparable<T>> {
                 this.raiz=nodo;
                 }
 
-            }
         }
-        while((nodo.izquierdo != null && nodo.prioridad.compareTo(nodo.izquierdo.prioridad)< 0)
-             || (nodo.derecho!= null &&  nodo.prioridad.compareTo(nodo.derecho.prioridad)< 0))
-            {
+        else if ((nodo.izquierdo != null && (nodo.izquierdo.prioridad.compareTo(nodo.prioridad)>0))
+            || (nodo.derecho != null && nodo.derecho.prioridad.compareTo(nodo.prioridad)>0))  {
                 Nodo padre = nodo.padre;
                 Nodo izquierdo= nodo.izquierdo;
                 Nodo derecho = nodo.derecho;
@@ -226,7 +237,7 @@ public class MaxHeap<T extends Comparable<T>> {
                 
             }
             else if (nodo.izquierdo != null && nodo.derecho == null && nodo.prioridad.compareTo(nodo.izquierdo.prioridad)< 0){
-             if (padre != null){
+                if (padre != null){
                     if (padre.izquierdo == nodo){
                         padre.izquierdo = izquierdo;
                         izquierdo.padre=padre;
@@ -236,34 +247,34 @@ public class MaxHeap<T extends Comparable<T>> {
                         izquierdo.padre=padre;
                     }
 
-                   }
-                   if (izquierdo.izquierdo != null){
-                        izquierdo.izquierdo.padre=nodo;
-                    }
-                    if (izquierdo.derecho != null){
-                        izquierdo.derecho.padre=nodo;
-                    }
-            izquierdo.izquierdo=nodo;
-            izquierdo.derecho=null;
-            nodo.padre=izquierdo;
-            nodo.izquierdo=null;
-            izquierdo.padre=padre;
-            if (izquierdo.padre == null){
+                }
+                izquierdo.izquierdo=nodo;
+                izquierdo.derecho=null;
+                nodo.padre=izquierdo;
+                nodo.izquierdo=null;
+                nodo.derecho=null;
+                if (izquierdo.padre == null){
                 this.raiz=izquierdo;
-             }
-           }
+                    }
+            }
         
 
-           if (nodo.padre ==null){
+           
+            }
+            if (nodo.padre ==null){
             this.raiz=nodo;
-           }
-        }
+            }
+    }
+    if (nodo.padre ==null){
+            this.raiz=nodo;
+            }
     }
     
-    public void insertar(T data, T prioridad){
+    public Nodo insertar(T data, T prioridad){
         this.cardinal++;
+        Nodo nodoNuevo = new Nodo(data, prioridad);
         if (this.cardinal == 1){
-            this.raiz = new Nodo(data, prioridad);
+            this.raiz = nodoNuevo ;
         }
         if (this.cardinal > 1){
         int numero = this.cardinal;
@@ -281,20 +292,27 @@ public class MaxHeap<T extends Comparable<T>> {
         }
         char letra = binario.charAt(binario.length()-1);
         if (Character.getNumericValue(letra) == 0){
-            nodo.izquierdo= new Nodo(data, prioridad);
+            nodo.izquierdo= nodoNuevo;
             nodo.izquierdo.padre = nodo;
             ordenar(nodo.izquierdo);
 
         }
         else {
-            nodo.derecho = new Nodo(data, prioridad);
+            nodo.derecho = nodoNuevo;
             nodo.derecho.padre = nodo;
             ordenar(nodo.derecho);
         }
 
        }
-        
+        return nodoNuevo;
     }
+    public void modificar(Nodo nodo, T prioridad){
+        nodo.prioridad = prioridad;
+        ordenar(nodo);
+
+    }
+
+
     public T eliminar(){
         Nodo nodoActual = this.raiz;
         if(nodoActual == null){
@@ -308,9 +326,8 @@ public class MaxHeap<T extends Comparable<T>> {
             this.cardinal--;
             return nodoRaizViejo.data;
         }
-        if (this.cardinal> 1){
-        int numero = this.cardinal;
-        String binario = Integer.toBinaryString(numero);
+        else if (this.cardinal> 1){
+        String binario = Integer.toBinaryString(this.cardinal);
         for (int i = 1; i < binario.length(); i++){
             char letra = binario.charAt(i);
             if (Character.getNumericValue(letra) == 0){
@@ -328,28 +345,37 @@ public class MaxHeap<T extends Comparable<T>> {
             }
             else {nodoActual.padre.derecho=null;}
         }
-        nodoActual.derecho=null;
-        nodoActual.izquierdo=null;
-        nodoActual.padre=null;
-        Nodo nodoDerecho =this.raiz.derecho;
-        Nodo nodoIzquierdo = this.raiz.izquierdo;
 
-        if (nodoDerecho!=null){
-            nodoDerecho.padre=nodoActual;
+        nodoActual.padre=null;
+        nodoActual.izquierdo=null;
+        nodoActual.derecho=null;
+
+        Nodo derecho = nodoRaizViejo.derecho;
+        Nodo izquierdo = nodoRaizViejo.izquierdo;
+
+
+        if (derecho!=null){
+            derecho.padre=nodoActual;
+
         }
-        if (nodoIzquierdo!=null){
-            nodoIzquierdo.padre=nodoActual;
+        if (izquierdo!=null){
+            izquierdo.padre=nodoActual;
         }
-        nodoActual.derecho=nodoDerecho;
-        nodoActual.izquierdo=nodoIzquierdo;
+        nodoActual.derecho=derecho;
+        nodoActual.izquierdo=izquierdo;
         nodoRaizViejo.derecho=null;
         nodoRaizViejo.izquierdo=null;
         this.raiz=nodoActual;
 
         ordenar (nodoActual);
+        if (nodoActual.padre==null){
+            this.raiz=nodoActual;
         }
         cardinal--;
+        }
+
         return nodoRaizViejo.data;
         
 }
+
 }
